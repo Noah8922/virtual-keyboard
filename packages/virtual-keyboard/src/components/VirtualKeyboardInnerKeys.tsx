@@ -4,6 +4,7 @@ import { useKeyboardContext } from "./VirtualKeyboardContext";
 export const VirtualKeyboardInnerKeys = () => {
   const { currentLayout, handleKeyPress, keyboardRowStyle } =
     useKeyboardContext();
+
   return (
     <>
       {currentLayout.map((row, rowIndex) => (
@@ -20,7 +21,8 @@ export const VirtualKeyboardInnerKeys = () => {
             <button
               key={`${rowIndex}-${keyIndex}`}
               onPointerDown={() => handleKeyPress(key.label)}
-              style={key.style}
+              // style={key.style}
+              className={"key-base "}
             >
               {getKeyLabel(key.label)}
             </button>

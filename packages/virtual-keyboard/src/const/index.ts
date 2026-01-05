@@ -169,8 +169,6 @@ export const getCurrentLayout = ({
       ? KOREAN_KEYS[isShift ? "shift" : "default"]
       : ENGLISH_KEYS[isShift ? "shift" : "default"];
 
-  console.log(customKeyboardLayout, targetLayout);
-
   return targetLayout.map((row) =>
     row.map((key) => {
       if (

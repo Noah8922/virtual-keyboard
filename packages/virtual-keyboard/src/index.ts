@@ -1,3 +1,5 @@
+import "./utils/styles.css";
+
 export * from "./components/VirtualKeyboard";
 export * from "./const";
 export * from "./types";
