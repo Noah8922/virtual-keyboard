@@ -1,0 +1,59 @@
+.key-base {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 2rem;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 400;
+  border-radius: 0.25rem;
+  transition: all 0.15s ease-in-out;
+  user-select: none;
+  touch-action: manipulation;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  border: 1px solid #d3d3d3;
+}
+
+.key-enter {
+  background-color: #3b82f6; /* secondary color - adjust as needed */
+  color: white;
+  border-color: #3b82f6;
+}
+
+.key-enter:hover {
+  background-color: rgba(59, 130, 246, 0.9);
+}
+
+.key-enter:active {
+  background-color: rgba(59, 130, 246, 0.8);
+}
+
+.key-normal {
+  background-color: white;
+  color: #444;
+  border-color: #d3d3d3;
+}
+
+.key-normal:hover {
+  background-color: #e5e5e5;
+}
+
+.key-normal:active {
+  background-color: #cdd2d9;
+}
+
+.key-special {
+  background-color: white;
+  color: #444;
+  border-color: #d3d3d3;
+}
+
+.key-special:hover {
+  background-color: #e5e5e5;
+}
+
+.key-special:active {
+  background-color: #cdd2d9;
+}
+
