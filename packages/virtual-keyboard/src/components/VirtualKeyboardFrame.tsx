@@ -1,6 +1,6 @@
 import { PropsWithChildren } from "react";
 import { useKeyboardContext } from "./VirtualKeyboardContext";
-import { KeyboardStyleType } from "../types";
+import { KeyboardFrameStyleType } from "../types";
 
 export const VirtualKeyboardFrame = ({ children }: PropsWithChildren<{}>) => {
   const { keyboardFrameStyle } = useKeyboardContext();
@@ -29,7 +29,7 @@ export const VirtualKeyboardFrame = ({ children }: PropsWithChildren<{}>) => {
   );
 };
 
-const DEFAULT_KEYBOARD_FRAME_STYLE: KeyboardStyleType = {
+const DEFAULT_KEYBOARD_FRAME_STYLE: KeyboardFrameStyleType = {
   width: "100%",
   height: "100%",
   backgroundColor: "#ececec",

@@ -1,8 +1,8 @@
-import { getKeyLabel } from "../utils";
+import { Fragment } from "react/jsx-runtime";
 import { useKeyboardContext } from "./VirtualKeyboardContext";
 
 export const VirtualKeyboardInnerKeys = () => {
-  const { currentLayout, handleKeyPress, keyboardRowStyle } =
+  const { currentLayout, handleKeyPress, keyboardFrameStyle } =
     useKeyboardContext();
 
   return (
@@ -14,18 +14,22 @@ export const VirtualKeyboardInnerKeys = () => {
             display: "flex",
             width: "100%",
             height: "100%",
-            gap: keyboardRowStyle?.gap ?? "0.25rem",
+            gap: keyboardFrameStyle?.rowGap ?? "0.25rem",
           }}
         >
           {row.map((key, keyIndex) => (
-            <button
-              key={`${rowIndex}-${keyIndex}`}
-              onPointerDown={() => handleKeyPress(key.label)}
-              // style={key.style}
-              className={"key-base "}
-            >
-              {getKeyLabel(key.label)}
-            </button>
+            <Fragment key={`${rowIndex}-${keyIndex}`}>
+              {key.isCustomed ? (
+                key.component
+              ) : (
+                <button
+                  onPointerDown={() => handleKeyPress(key.key)}
+                  style={key.style}
+                >
+                  {key.label}
+                </button>
+              )}
+            </Fragment>
           ))}
         </div>
       ))}

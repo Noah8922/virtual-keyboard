@@ -8,22 +8,18 @@ import {
   useRef,
   useState,
 } from "react";
-import { getCurrentLayout } from "../const";
+import { CurrentLayoutType, getCurrentLayout } from "../const";
 import {
-  CustomKeyStylesType,
   KeyboardKeyRawLayoutType,
   KeyboardLanguage,
-  KeyboardLayoutRowType,
-  KeyboardStyleType,
+  KeyboardFrameStyleType,
+  CustomKeyboardComponentsType,
 } from "../types";
 
 type VirtualKeyboardContextType = {
-  currentLayout: KeyboardLayoutRowType[][];
+  currentLayout: CurrentLayoutType;
   handleKeyPress: (key: string) => void;
-  keyboardFrameStyle?: Partial<KeyboardStyleType>;
-  keyboardRowStyle?: Partial<{
-    gap: React.CSSProperties["gap"];
-  }>;
+  keyboardFrameStyle?: Partial<KeyboardFrameStyleType>;
 };
 
 const VirtualKeyboardContext = createContext<VirtualKeyboardContextType | null>(
@@ -47,20 +43,16 @@ export const VirtualKeyboardProvider = ({
   onClikEnter,
   initialLanguage = "ko",
   keyboardFrameStyle,
-  keyboardRowStyle,
-  customKeyboardKeyStyles,
-  customKeyboardLayout,
+  layout,
+  components,
   children,
 }: PropsWithChildren<{
   inputRef: RefObject<HTMLInputElement>;
   onClikEnter?: () => void;
   initialLanguage?: KeyboardLanguage;
-  keyboardFrameStyle?: Partial<KeyboardStyleType>;
-  keyboardRowStyle?: Partial<{
-    gap: React.CSSProperties["gap"];
-  }>;
-  customKeyboardKeyStyles?: CustomKeyStylesType;
-  customKeyboardLayout?: Record<KeyboardLanguage, KeyboardKeyRawLayoutType>;
+  keyboardFrameStyle?: Partial<KeyboardFrameStyleType>;
+  layout?: Record<KeyboardLanguage, KeyboardKeyRawLayoutType>;
+  components?: CustomKeyboardComponentsType | undefined;
 }>) => {
   const [lang, setLang] = useState<KeyboardLanguage>(initialLanguage);
   const [isShift, setIsShift] = useState(false);
@@ -182,12 +174,12 @@ export const VirtualKeyboardProvider = ({
         currentLayout: getCurrentLayout({
           lang,
           isShift,
-          customKeyboardKeyStyles,
-          customKeyboardLayout,
+          layout,
+          components,
+          handleKeyPress,
         }),
         handleKeyPress,
         keyboardFrameStyle,
-        keyboardRowStyle,
       }}
     >
       {children}

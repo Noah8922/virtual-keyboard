@@ -1,6 +1,6 @@
 export type KeyboardLanguage = "ko" | "en";
 
-export type KeyboardStyleType = {
+export type KeyboardFrameStyleType = {
   width: React.CSSProperties["width"];
   height: React.CSSProperties["height"];
   backgroundColor: React.CSSProperties["backgroundColor"];
@@ -17,8 +17,10 @@ export type KeyboardKeyRawLayoutType = {
 };
 
 export type KeyboardLayoutRowType = {
+  component?: React.ReactNode;
+  key: string;
   label: string;
-  style: React.CSSProperties;
+  style?: React.CSSProperties;
 };
 
 export type KeyboardLayoutType = {
@@ -26,18 +28,7 @@ export type KeyboardLayoutType = {
   shift: KeyboardLayoutRowType[][];
 };
 
-export const CommonKeyTypeArray = [
-  "{bksp}",
-  "{tab}",
-  "{capslock}",
-  "{shift}",
-  "{enter}",
-  "{space}",
-  "{lang}",
-] as const;
-export type CommonKeyType = (typeof CommonKeyTypeArray)[number];
-
-export type CustomKeyStylesType = {
-  targetKey: string | CommonKeyType;
-  style: React.CSSProperties;
-};
+export type CustomKeyboardComponentsType = (props: {
+  key: string;
+  onClick: () => void;
+}) => React.ReactNode;

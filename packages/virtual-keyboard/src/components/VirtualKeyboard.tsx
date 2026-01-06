@@ -1,10 +1,9 @@
 import { RefObject } from "react";
 import {
-  CustomKeyStylesType,
+  CustomKeyboardComponentsType,
+  KeyboardFrameStyleType,
   KeyboardKeyRawLayoutType,
   KeyboardLanguage,
-  KeyboardLayoutType,
-  KeyboardStyleType,
 } from "../types";
 import { VirtualKeyboardProvider } from "./VirtualKeyboardContext";
 import { VirtualKeyboardFrame } from "./VirtualKeyboardFrame";
@@ -12,28 +11,18 @@ import { VirtualKeyboardInnerKeys } from "./VirtualKeyboardInnerKeys";
 
 export const VirtualKeyboard = ({
   inputRef,
-
-  // 기능 CUSTOM
   onClikEnter,
-
-  // 언어 선택
   initialLanguage,
-
-  // style custom
   keyboardFrameStyle,
-  keyboardRowStyle,
-  customKeyboardKeyStyles,
-  customKeyboardLayout,
+  layout,
+  components,
 }: {
   inputRef: RefObject<HTMLInputElement>;
   onClikEnter?: () => void;
   initialLanguage?: KeyboardLanguage;
-  keyboardFrameStyle?: Partial<KeyboardStyleType>;
-  keyboardRowStyle?: Partial<{
-    gap: React.CSSProperties["gap"];
-  }>;
-  customKeyboardKeyStyles?: CustomKeyStylesType;
-  customKeyboardLayout?: Record<KeyboardLanguage, KeyboardKeyRawLayoutType>;
+  keyboardFrameStyle?: Partial<KeyboardFrameStyleType>;
+  layout?: Record<KeyboardLanguage, KeyboardKeyRawLayoutType>;
+  components?: CustomKeyboardComponentsType | undefined;
 }) => {
   return (
     <VirtualKeyboardProvider
@@ -41,9 +30,8 @@ export const VirtualKeyboard = ({
       onClikEnter={onClikEnter}
       initialLanguage={initialLanguage}
       keyboardFrameStyle={keyboardFrameStyle}
-      keyboardRowStyle={keyboardRowStyle}
-      customKeyboardKeyStyles={customKeyboardKeyStyles}
-      customKeyboardLayout={customKeyboardLayout}
+      layout={layout}
+      components={components}
     >
       <VirtualKeyboardFrame>
         <VirtualKeyboardInnerKeys />
