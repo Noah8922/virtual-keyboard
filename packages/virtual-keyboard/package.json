@@ -1,29 +1,70 @@
 {
   "name": "virtual-keyboard-noahko",
-  "version": "1.0.0",
-  "description": "",
-  "main": "dist/index.js",
-  "module": "dist/index.js",
-  "types": "dist/index.d.ts",
-  "exports": {
-    ".": "./src/index.ts"
-  },
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "tsup"
-  },
-  "keywords": [],
-  "author": "",
+  "version": "1.1.0",
+  "description": "키오스크·태블릿용 React 한글 가상 키보드. 자모 조합, 한/영 전환, 커서 위치 입력을 지원합니다. (React virtual keyboard with Korean Hangul composition)",
+  "keywords": [
+    "react",
+    "virtual-keyboard",
+    "keyboard",
+    "korean",
+    "hangul",
+    "한글",
+    "가상키보드",
+    "kiosk",
+    "touchscreen",
+    "typescript"
+  ],
+  "author": "Noah Ko (https://github.com/Noah8922)",
   "license": "MIT",
+  "homepage": "https://noah8922.github.io/virtual-keyboard/",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Noah8922/virtual-keyboard.git",
+    "directory": "packages/virtual-keyboard"
+  },
+  "bugs": {
+    "url": "https://github.com/Noah8922/virtual-keyboard/issues"
+  },
+  "sideEffects": false,
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.mts",
+        "default": "./dist/index.mjs"
+      },
+      "require": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      }
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "check-types": "tsc --noEmit",
+    "prepublishOnly": "pnpm run check-types && pnpm run build"
+  },
   "devDependencies": {
     "@types/react": "19.2.2",
     "@types/react-dom": "19.2.2",
+    "hangul-js": "^0.2.6",
+    "lucide-react": "^0.453.0",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
     "tsup": "^8.5.1",
     "typescript": "^5.9.3"
   },
   "peerDependencies": {
     "hangul-js": "^0.2.6",
-    "lucide-react": "^0.453.0",
+    "lucide-react": ">=0.453.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0"
   }

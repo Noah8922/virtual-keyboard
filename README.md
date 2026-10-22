@@ -1,135 +1,73 @@
-# Turborepo starter
+# virtual-keyboard
 
-This Turborepo starter is maintained by the Turborepo core team.
+[![npm](https://img.shields.io/npm/v/virtual-keyboard-noahko)](https://www.npmjs.com/package/virtual-keyboard-noahko)
+[![license](https://img.shields.io/npm/l/virtual-keyboard-noahko)](./LICENSE)
 
-## Using this example
+키오스크·태블릿용 React 한글 가상 키보드 [`virtual-keyboard-noahko`](https://www.npmjs.com/package/virtual-keyboard-noahko)의 저장소입니다.
 
-Run the following command:
+**[라이브 데모](https://noah8922.github.io/virtual-keyboard/)** · **[사용법(패키지 README)](./packages/virtual-keyboard/README.md)**
 
-```sh
-npx create-turbo@latest
+![데모 화면](./docs/demo.png)
+
+## 만든 이유
+
+키즈 실내 놀이시설 매장의 키오스크에서 고객이 한글을 입력해야 했는데, OS 화상 키보드는 한글 입력이 불안정했습니다. 그래서 자모 조합을 직접 처리하는 키보드를 React 컴포넌트로 만들었고, 실제 매장 키오스크에서 쓰고 있습니다. 다른 프로젝트에서도 쓸 수 있게 npm 패키지로 분리했습니다.
+
+## 주요 기능
+
+- 한글 자모 조합과 자모 단위 지우기([hangul-js](https://github.com/e-/Hangul.js) 사용)
+- 입력창의 커서 위치에 입력·삭제, 선택 범위 한 번에 지우기
+- 한/영 전환, 한 글자 뒤 자동으로 풀리는 Shift
+- 프레임 스타일·자판 배열·특정 키 렌더링 커스텀
+- 터치 화면 대응(`pointerdown` 입력, 더블 탭 확대 방지)
+
+```tsx
+import { useRef, type RefObject } from "react";
+import { VirtualKeyboard } from "virtual-keyboard-noahko";
+
+const inputRef = useRef<HTMLInputElement>(null);
+
+<input ref={inputRef} />
+<div style={{ height: 240 }}>
+  <VirtualKeyboard
+    inputRef={inputRef as RefObject<HTMLInputElement>}
+    onClickEnter={() => console.log(inputRef.current?.value)}
+  />
+</div>
 ```
 
-## What's inside?
+props와 커스텀 방법은 [패키지 README](./packages/virtual-keyboard/README.md)에 있습니다.
 
-This Turborepo includes the following packages/apps:
+## 저장소 구조
 
-### Apps and Packages
-
-- `docs`: a [Next.js](https://nextjs.org/) app
-- `web`: another [Next.js](https://nextjs.org/) app
-- `@repo/ui`: a stub React component library shared by both `web` and `docs` applications
-- `@repo/eslint-config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
-- `@repo/typescript-config`: `tsconfig.json`s used throughout the monorepo
-
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
-
-### Utilities
-
-This Turborepo has some additional tools already setup for you:
-
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
-
-### Build
-
-To build all apps and packages, run the following command:
+pnpm workspace와 Turborepo로 구성한 모노레포입니다.
 
 ```
-cd my-turborepo
-
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo build
-
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo build
-yarn dlx turbo build
-pnpm exec turbo build
+.
+├── apps/
+│   └── demo/                  # Vite + React 데모 (GitHub Pages로 배포)
+├── packages/
+│   ├── virtual-keyboard/      # npm 패키지 virtual-keyboard-noahko (tsup으로 ESM·CJS·타입 빌드)
+│   └── typescript-config/     # 공용 tsconfig
+└── docs/                      # README용 이미지
 ```
 
-You can build a specific package by using a [filter](https://turborepo.com/docs/crafting-your-repository/running-tasks#using-filters):
+## 개발
 
-```
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo build --filter=docs
+Node.js 18 이상과 pnpm 9가 필요합니다.
 
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo build --filter=docs
-yarn exec turbo build --filter=docs
-pnpm exec turbo build --filter=docs
-```
-
-### Develop
-
-To develop all apps and packages, run the following command:
-
-```
-cd my-turborepo
-
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo dev
-
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo dev
-yarn exec turbo dev
-pnpm exec turbo dev
+```bash
+pnpm install
+pnpm dev           # 패키지를 빌드한 뒤 데모 개발 서버 실행 (http://localhost:5173)
+pnpm build         # 패키지와 데모 빌드
+pnpm check-types   # 타입 검사
 ```
 
-You can develop a specific package by using a [filter](https://turborepo.com/docs/crafting-your-repository/running-tasks#using-filters):
+### 배포
 
-```
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo dev --filter=web
+- **npm 패키지**: `packages/virtual-keyboard`에서 `version`을 올리고 `npm publish`를 실행합니다. `prepublishOnly`가 타입 검사와 빌드를 먼저 실행합니다.
+- **데모**: `main` 브랜치에 push하면 GitHub Actions(`.github/workflows/deploy-demo.yml`)가 GitHub Pages에 배포합니다.
 
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo dev --filter=web
-yarn exec turbo dev --filter=web
-pnpm exec turbo dev --filter=web
-```
+## 라이선스
 
-### Remote Caching
-
-> [!TIP]
-> Vercel Remote Cache is free for all plans. Get started today at [vercel.com](https://vercel.com/signup?/signup?utm_source=remote-cache-sdk&utm_campaign=free_remote_cache).
-
-Turborepo can use a technique known as [Remote Caching](https://turborepo.com/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
-
-By default, Turborepo will cache locally. To enable Remote Caching you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup?utm_source=turborepo-examples), then enter the following commands:
-
-```
-cd my-turborepo
-
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo login
-
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo login
-yarn exec turbo login
-pnpm exec turbo login
-```
-
-This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
-
-Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your Turborepo:
-
-```
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo link
-
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo link
-yarn exec turbo link
-pnpm exec turbo link
-```
-
-## Useful Links
-
-Learn more about the power of Turborepo:
-
-- [Tasks](https://turborepo.com/docs/crafting-your-repository/running-tasks)
-- [Caching](https://turborepo.com/docs/crafting-your-repository/caching)
-- [Remote Caching](https://turborepo.com/docs/core-concepts/remote-caching)
-- [Filtering](https://turborepo.com/docs/crafting-your-repository/running-tasks#using-filters)
-- [Configuration Options](https://turborepo.com/docs/reference/configuration)
-- [CLI Usage](https://turborepo.com/docs/reference/command-line-reference)
+[MIT](./LICENSE)

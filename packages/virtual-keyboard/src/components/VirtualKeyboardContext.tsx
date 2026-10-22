@@ -1,4 +1,4 @@
-import { assemble, disassemble } from "hangul-js";
+import Hangul from "hangul-js";
 import {
   createContext,
   PropsWithChildren,
@@ -15,6 +15,9 @@ import {
   KeyboardFrameStyleType,
   CustomKeyboardComponentsType,
 } from "../types";
+
+// hangul-js는 CommonJS 모듈이라 Node ESM에서 named import가 안 된다
+const { assemble, disassemble } = Hangul;
 
 type VirtualKeyboardContextType = {
   currentLayout: CurrentLayoutType;
@@ -40,7 +43,7 @@ export const useKeyboardContext = () => {
 
 export const VirtualKeyboardProvider = ({
   inputRef,
-  onClikEnter,
+  onClickEnter,
   initialLanguage = "ko",
   keyboardFrameStyle,
   layout,
@@ -48,7 +51,7 @@ export const VirtualKeyboardProvider = ({
   children,
 }: PropsWithChildren<{
   inputRef: RefObject<HTMLInputElement>;
-  onClikEnter?: () => void;
+  onClickEnter?: () => void;
   initialLanguage?: KeyboardLanguage;
   keyboardFrameStyle?: Partial<KeyboardFrameStyleType>;
   layout?: Record<KeyboardLanguage, KeyboardKeyRawLayoutType>;
@@ -97,8 +100,13 @@ export const VirtualKeyboardProvider = ({
         return;
       }
 
+      if (key === "{tab}") {
+        setFocusAndCursor(start);
+        return;
+      }
+
       if (key === "{enter}") {
-        onClikEnter && onClikEnter();
+        onClickEnter?.();
         return;
       }
 
@@ -165,7 +173,7 @@ export const VirtualKeyboardProvider = ({
         setIsShift(false);
       }
     },
-    [inputRef, isShift, onClikEnter, setFocusAndCursor]
+    [inputRef, isShift, onClickEnter, setFocusAndCursor]
   );
 
   return (

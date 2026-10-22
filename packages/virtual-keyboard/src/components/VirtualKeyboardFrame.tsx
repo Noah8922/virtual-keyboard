@@ -10,6 +10,7 @@ export const VirtualKeyboardFrame = ({ children }: PropsWithChildren<{}>) => {
       style={{
         display: "flex",
         flexDirection: "column",
+        boxSizing: "border-box",
         width: keyboardFrameStyle?.width ?? DEFAULT_KEYBOARD_FRAME_STYLE.width,
         height:
           keyboardFrameStyle?.height ?? DEFAULT_KEYBOARD_FRAME_STYLE.height,
