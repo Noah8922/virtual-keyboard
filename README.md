@@ -3,9 +3,9 @@
 [![npm](https://img.shields.io/npm/v/virtual-keyboard-noahko)](https://www.npmjs.com/package/virtual-keyboard-noahko)
 [![license](https://img.shields.io/npm/l/virtual-keyboard-noahko)](./LICENSE)
 
-키오스크·태블릿용 React 한글 가상 키보드 [`virtual-keyboard-noahko`](https://www.npmjs.com/package/virtual-keyboard-noahko)의 저장소입니다.
+키오스크·태블릿용 React 한글 가상 키보드 `virtual-keyboard-noahko`의 저장소입니다.
 
-**[라이브 데모](https://noah8922.github.io/virtual-keyboard/)** · **[사용법(패키지 README)](./packages/virtual-keyboard/README.md)**
+[라이브 데모](https://noah8922.github.io/virtual-keyboard/) · [npm 패키지](https://www.npmjs.com/package/virtual-keyboard-noahko) · [사용법(패키지 README)](./packages/virtual-keyboard/README.md)
 
 ![데모 화면](./docs/demo.png)
 
